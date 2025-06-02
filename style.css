@@ -6,8 +6,22 @@
 html,
 body {
   height: 100%;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Big Caslon", serif;
   font-weight: normal;
+  background: linear-gradient(to right, 
+    #90EE90 0%, 
+    #90EE90 calc((100% - 700px) / 2),
+    white calc((100% - 700px) / 2),
+    white calc((100% - 700px) / 2 + 700px),
+    #90EE90 calc((100% - 700px) / 2 + 700px),
+    #90EE90 100%
+  );
+}
+
+h1 {
+  padding: 0%;
+  font-size: 3rem;  /* Added font-size property */
+  padding-bottom: 20px;
 }
 main {
   width: 700px;
@@ -16,9 +30,13 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Change from center to flex-start */
   gap: 38px;
-  padding: 8px;
+  padding-top: 40px; /* Add specific top padding instead of general padding */
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 10px;
+  background-color: white;
 }
 .chat-history {
   width: 100%;
@@ -72,12 +90,12 @@ button#buttonA:hover {
 }
 
 .letter-btn {
-    padding: 8px 12px;  /* reduced from 12px 16px */
+    padding: 8px 12px;
     border: none;
     background: none;
     cursor: pointer;
     font-size: 1.5rem;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Big Caslon", serif;
     font-weight: bold;
     color: darkgreen;
     transition: all 0.2s ease;
@@ -112,6 +130,15 @@ button#buttonA:hover {
   text-align: center;
   max-width: 80%;
   line-height: 1.4;
+  font-family: "Big Caslon", serif;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.message.assistant:last-child {
+  display: block;
+  opacity: 1;
 }
 
 .message.user {
