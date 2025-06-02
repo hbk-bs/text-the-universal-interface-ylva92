@@ -18,20 +18,23 @@ let messageHistory = {
 		{
 			role: 'system',
 			content: `
-			Du bist ein kreativer Zungenbrecher-Generator. 
+			Du bist ein kreativer Zungenbrecher-Generator mit perfekter deutscher Rechtschreibung. 
             Nimm die Wörter aus der Nutzereingabe und kreiere daraus einen neuen Zungenbrecher.
+            
             Antworte in folgendem JSON Format:
             {
                 "zungenbrecher": "Dein generierter Zungenbrecher hier"
             }
             
             Wichtige Regeln:
+            - Achte auf korrekte deutsche Rechtschreibung und Grammatik
+            - Setze Satzzeichen und Großschreibung regelkonform ein
             - Greife mindestens ein Wort oder Thema aus der Nutzereingabe auf
             - Baue dieses in einen neuen Zungenbrecher mit passenden Alliterationen ein
             - Der Zungenbrecher muss das Thema/Wort der Nutzereingabe enthalten
             - Antworte NUR mit dem JSON-Objekt
             - Keine Erklärungen oder sonstigen Texte
-            - Beispiel bei Eingabe "Katze": {"zungenbrecher": "Kluge Katzen kichern kraftvoll, wenn kecke Kater kommen"}`,
+            - Beispiel bei Eingabe "Katze": {"zungenbrecher": "Kluge Katzen kichern kraftvoll, wenn kecke Kater kommen."}`,
 		},
 	],
 };
@@ -46,62 +49,21 @@ if (!apiEndpoint.includes('run')) {
 const MAX_HISTORY_LENGTH = 15;
 
 document.addEventListener('DOMContentLoaded', () => {
-	// get the history element
 	const chatHistoryElement = document.querySelector('.chat-history');
-	const inputElement = document.querySelector('input');
 	const formElement = document.querySelector('form');
-	// check if the elements exists in the DOM
+
 	if (!chatHistoryElement) {
 		throw new Error('Could not find element .chat-history');
 	}
 	if (!formElement) {
 		throw new Error('Form element does not exists');
 	}
-	if (!inputElement) {
-		throw new Error('Could not find input element');
-	}
-	// run a function when the user hits send
-	formElement.addEventListener('submit', async (event) => {
-		event.preventDefault(); // dont reload the page
-
-		const formData = new FormData(formElement);
-		const content = formData.get('content');
-		if (!content) {
-			throw new Error("Could not get 'content' from form");
-		}
-		//@ts-ignore
-		messageHistory.messages.push({ role: 'user', content: content });
-		messageHistory = truncateHistory(messageHistory);
-		chatHistoryElement.innerHTML = addToChatHistoryElement(messageHistory);
-		inputElement.value = '';
-		scrollToBottom(chatHistoryElement);
-
-		const response = await fetch(apiEndpoint, {
-			method: 'POST',
-			headers: {
-				'content-type': 'application/json',
-			},
-			body: JSON.stringify(messageHistory),
-		});
-
-		if (!response.ok) {
-			const errorText = await response.text();
-			throw new Error(errorText);
-		}
-
-		const json = await response.json();
-		console.log(json);
-		// @ts-ignore
-		messageHistory.messages.push(json.completion.choices[0].message);
-		messageHistory = truncateHistory(messageHistory);
-
-		chatHistoryElement.innerHTML = addToChatHistoryElement(messageHistory);
-		scrollToBottom(chatHistoryElement);
-	});
 
 	// Create letter buttons programmatically
-	const letterButtonsContainer = document.createElement('div');
-	letterButtonsContainer.className = 'letter-buttons';
+	const letterButtonsContainer = document.querySelector('.letter-buttons');
+	if (!letterButtonsContainer) {
+		throw new Error('Could not find letter-buttons container');
+	}
 
 	// Create buttons for A-Z
 	for (let i = 65; i <= 90; i++) {
@@ -111,18 +73,37 @@ document.addEventListener('DOMContentLoaded', () => {
 		button.className = 'letter-btn';
 		button.textContent = letter;
 
-		button.addEventListener('click', () => {
-			if (!inputElement) return;
-			inputElement.value = letter;
-			const event = new Event('input', { bubbles: true });
-			inputElement.dispatchEvent(event);
+		button.addEventListener('click', async () => {
+			// Add letter directly to message history
+			messageHistory.messages.push({ role: 'user', content: letter });
+			messageHistory = truncateHistory(messageHistory);
+			chatHistoryElement.innerHTML = addToChatHistoryElement(messageHistory);
+			scrollToBottom(chatHistoryElement);
+
+			const response = await fetch(apiEndpoint, {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json',
+				},
+				body: JSON.stringify(messageHistory),
+			});
+
+			if (!response.ok) {
+				const errorText = await response.text();
+				throw new Error(errorText);
+			}
+
+			const json = await response.json();
+			// @ts-ignore
+			messageHistory.messages.push(json.completion.choices[0].message);
+			messageHistory = truncateHistory(messageHistory);
+
+			chatHistoryElement.innerHTML = addToChatHistoryElement(messageHistory);
+			scrollToBottom(chatHistoryElement);
 		});
 
 		letterButtonsContainer.appendChild(button);
 	}
-
-	// Insert letter buttons after input field
-	inputElement.parentNode.insertBefore(letterButtonsContainer, inputElement.nextSibling);
 });
 
 // Update the addToChatHistoryElement function to handle JSON responses
