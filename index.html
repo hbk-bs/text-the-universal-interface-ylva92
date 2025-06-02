@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>p5.js Starter Project</title>
+    <title>Zungenbrecher Alphabet</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main>
-	<form action="">
-		<input type="text" id="input" name="content">
-		<button id="button" name="button">Click me</button>
-	</form>
-    <div id="sketch"></div>
-    <a href="index.js">source code</a>
+    <main>
+        <h1>Zungenbrecher Chat</h1>
+        <div class="chat-history">
+            <p class="bot-message">Fischers Fritz fischt frische Fische! Wie kann ich dir helfen?</p>
+        </div>
+        <form>
+            <input type="text" name="content" placeholder="Schreib deine Nachricht...">
+            <div class="letter-buttons">
+                <button type="button" class="letter-btn">A</button>
+                <button type="button" class="letter-btn">B</button>
+                <button type="button" class="letter-btn">C</button>
+                <!-- ... more buttons ... -->
+                <button type="button" class="letter-btn">Z</button>
+            </div>
+            <button type="submit">Verdreh's!</button>
+        </form>
     </main>
-    <script src="lib/p5.min.js"></script>
-
     <script src="index.js"></script>
 </body>
 </html>
