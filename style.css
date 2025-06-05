@@ -8,25 +8,22 @@ body {
   height: 100%;
   font-family: "Big Caslon", serif;
   font-weight: normal;
-  background: linear-gradient(to right, 
-    #90EE90 0%, 
-    #90EE90 calc((100% - 700px) / 2),
-    white calc((100% - 700px) / 2),
-    white calc((100% - 700px) / 2 + 700px),
-    #90EE90 calc((100% - 700px) / 2 + 700px),
-    #90EE90 100%
-  );
+  background: #90EE90; /* Vereinfachter Hintergrund für mobile Geräte */
 }
 
 h1 {
   padding: 0%;
-  font-size: 3rem;  /* Added font-size property */
-  padding-bottom: 20px;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  padding-bottom: 15px;
+  text-align: center;
 }
 main {
-  width: 700px;
+  width: 100%;
+  max-width: 700px;
   height: 100%;
   margin: 0 auto;
+  padding: 20px 16px;
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,15 +33,16 @@ main {
   padding-left: 8px;
   padding-right: 8px;
   padding-bottom: 10px;
-  background-color: white;
 }
 .chat-history {
   width: 100%;
-  min-height: 200px;
+  min-height: 150px;
+  max-height: 50vh;
+  overflow-y: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px;
+  padding: 12px;
   background: none;
 }
 .chat-history > .message.assistant {
@@ -85,16 +83,16 @@ button#buttonA:hover {
     flex-wrap: wrap;
     gap: 8px;  /* reduced from 12px */
     justify-content: center;
-    padding: 16px;
+    padding: 12px 8px;
     width: 100%;
 }
 
 .letter-btn {
-    padding: 8px 12px;
+    padding: 6px 8px;
     border: none;
     background: none;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 3vw, 1.5rem);
     font-family: "Big Caslon", serif;
     font-weight: bold;
     color: darkgreen;
@@ -126,9 +124,9 @@ button#buttonA:hover {
 }
 
 .message.assistant {
-  font-size: 2rem;
+  font-size: clamp(1.2rem, 4vw, 2rem);
   text-align: center;
-  max-width: 80%;
+  max-width: 90%;
   line-height: 1.4;
   font-family: "Big Caslon", serif;
   display: none;
@@ -143,4 +141,77 @@ button#buttonA:hover {
 
 .message.user {
   display: none;
+}
+
+.loading-spinner {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid darkgreen;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 1000;
+}
+
+.loading-spinner.show {
+    display: block;
+}
+
+.loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-radius: 50%;
+    border-top-color: #0b4403;
+    animation: spin 1s linear infinite;
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Media Queries für verschiedene Bildschirmgrößen */
+@media screen and (max-width: 600px) {
+  main {
+    padding: 16px 8px;
+  }
+
+  .letter-buttons {
+    gap: 4px;
+  }
+
+  .letter-btn {
+    padding: 4px 6px;
+  }
+
+  .loader {
+    width: 32px;
+    height: 32px;
+    border-width: 3px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .letter-buttons {
+    gap: 2px;
+  }
+
+  .letter-btn {
+    padding: 3px 5px;
+  }
 }

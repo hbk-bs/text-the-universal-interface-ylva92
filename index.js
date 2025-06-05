@@ -51,6 +51,7 @@ const MAX_HISTORY_LENGTH = 15;
 document.addEventListener('DOMContentLoaded', () => {
 	const chatHistoryElement = document.querySelector('.chat-history');
 	const formElement = document.querySelector('form');
+	const loader = document.getElementById('loader');
 
 	if (!chatHistoryElement) {
 		throw new Error('Could not find element .chat-history');
@@ -73,33 +74,41 @@ document.addEventListener('DOMContentLoaded', () => {
 		button.className = 'letter-btn';
 		button.textContent = letter;
 
+		// Modify the button click event listener
 		button.addEventListener('click', async () => {
-			// Add letter directly to message history
-			messageHistory.messages.push({ role: 'user', content: letter });
-			messageHistory = truncateHistory(messageHistory);
-			chatHistoryElement.innerHTML = addToChatHistoryElement(messageHistory);
-			scrollToBottom(chatHistoryElement);
+			try {
+				loader.classList.remove('hidden');
+				// Add letter directly to message history
+				messageHistory.messages.push({ role: 'user', content: letter });
+				messageHistory = truncateHistory(messageHistory);
+				chatHistoryElement.innerHTML = addToChatHistoryElement(messageHistory);
+				scrollToBottom(chatHistoryElement);
 
-			const response = await fetch(apiEndpoint, {
-				method: 'POST',
-				headers: {
-					'content-type': 'application/json',
-				},
-				body: JSON.stringify(messageHistory),
-			});
+				const response = await fetch(apiEndpoint, {
+					method: 'POST',
+					headers: {
+						'content-type': 'application/json',
+					},
+					body: JSON.stringify(messageHistory),
+				});
 
-			if (!response.ok) {
-				const errorText = await response.text();
-				throw new Error(errorText);
+				if (!response.ok) {
+					const errorText = await response.text();
+					throw new Error(errorText);
+				}
+
+				const json = await response.json();
+				messageHistory.messages.push(json.completion.choices[0].message);
+				messageHistory = truncateHistory(messageHistory);
+
+				chatHistoryElement.innerHTML = addToChatHistoryElement(messageHistory);
+				scrollToBottom(chatHistoryElement);
+			} catch (error) {
+				console.error('Error:', error);
+				// Optional: Show error message to user
+			} finally {
+				loader.classList.add('hidden');
 			}
-
-			const json = await response.json();
-			// @ts-ignore
-			messageHistory.messages.push(json.completion.choices[0].message);
-			messageHistory = truncateHistory(messageHistory);
-
-			chatHistoryElement.innerHTML = addToChatHistoryElement(messageHistory);
-			scrollToBottom(chatHistoryElement);
 		});
 
 		letterButtonsContainer.appendChild(button);
