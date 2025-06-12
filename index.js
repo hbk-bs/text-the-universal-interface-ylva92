@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const chatHistoryElement = document.querySelector('.chat-history');
 	const formElement = document.querySelector('form');
 	const loader = document.getElementById('loader');
+	const saveButton = document.getElementById('saveButton');
 
 	if (!chatHistoryElement) {
 		throw new Error('Could not find element .chat-history');
@@ -65,6 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!letterButtonsContainer) {
 		throw new Error('Could not find letter-buttons container');
 	}
+
+
 
 	// Create buttons for A-Z
 	for (let i = 65; i <= 90; i++) {
@@ -103,6 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				chatHistoryElement.innerHTML = addToChatHistoryElement(messageHistory);
 				scrollToBottom(chatHistoryElement);
+				
+				// Zeige den Speicher-Button nach erfolgreicher Antwort
+				if (saveButton) {
+					saveButton.classList.remove('hidden');
+				}
 			} catch (error) {
 				console.error('Error:', error);
 				// Optional: Show error message to user
@@ -117,21 +125,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Update the addToChatHistoryElement function to handle JSON responses
 function addToChatHistoryElement(mhistory) {
-	const htmlStrings = mhistory.messages.map((message) => {
-		if (message.role === 'system') return '';
+    const htmlStrings = mhistory.messages.map((message) => {
+        if (message.role === 'system') return '';
 
-		if (message.role === 'assistant') {
-			try {
-				const response = JSON.parse(message.content);
-				return `<div class="message ${message.role}">${response.zungenbrecher}</div>`;
-			} catch (e) {
-				return `<div class="message ${message.role}">${message.content}</div>`;
-			}
-		}
+        if (message.role === 'assistant') {
+            try {
+                const response = JSON.parse(message.content);
+                return `<div class="message ${message.role}">
+                    ${response.zungenbrecher}
+                    <button class="copy-button" onclick="copyToClipboard(this)">Kopieren</button>
+                </div>`;
+            } catch (e) {
+                return `<div class="message ${message.role}">${message.content}</div>`;
+            }
+        }
 
-		return `<div class="message ${message.role}">${message.content}</div>`;
-	});
-	return htmlStrings.join('');
+        return `<div class="message ${message.role}">${message.content}</div>`;
+    });
+    return htmlStrings.join('');
 }
 
 function scrollToBottom(conainer) {
@@ -149,4 +160,18 @@ function truncateHistory(h) {
 	} else {
 		return h;
 	}
+}
+
+function copyToClipboard(button) {
+    const messageText = button.parentElement.textContent.replace('Kopieren', '').trim();
+    navigator.clipboard.writeText(messageText).then(() => {
+        // Optional: Visuelles Feedback
+        const originalText = button.textContent;
+        button.textContent = 'Kopiert!';
+        setTimeout(() => {
+            button.textContent = originalText;
+        }, 2000);
+    }).catch(err => {
+        console.error('Fehler beim Kopieren:', err);
+    });
 }

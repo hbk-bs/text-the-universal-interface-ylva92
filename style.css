@@ -8,7 +8,7 @@ body {
   height: 100%;
   font-family: "Big Caslon", serif;
   font-weight: normal;
-  background: #90EE90; /* Vereinfachter Hintergrund für mobile Geräte */
+  background: #90ee90; /* Vereinfachter Hintergrund für mobile Geräte */
 }
 
 h1 {
@@ -29,7 +29,7 @@ main {
   align-items: center;
   justify-content: flex-start; /* Change from center to flex-start */
   gap: 38px;
-  padding-top: 40px; /* Add specific top padding instead of general padding */
+  padding-top: 20px; /* Add specific top padding instead of general padding */
   padding-left: 8px;
   padding-right: 8px;
   padding-bottom: 10px;
@@ -132,6 +132,7 @@ button#buttonA:hover {
   display: none;
   opacity: 0;
   transition: opacity 0.3s ease;
+  position: relative;
 }
 
 .message.assistant:last-child {
@@ -167,9 +168,9 @@ button#buttonA:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 48px;
-    height: 48px;
-    border: 5px solid #FFF;
+    width: 40px;
+    height: 40px;
+    border: 5px solid #fff;
     border-radius: 50%;
     border-top-color: #0b4403;
     animation: spin 1s linear infinite;
@@ -215,3 +216,31 @@ button#buttonA:hover {
     padding: 3px 5px;
   }
 }
+
+.message.assistant:hover .copy-button {
+    opacity: 1;
+}
+
+.copy-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ffffff;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.page-header {
+    text-align: center;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    font-family: "Big Caslon", serif;
+    font-size: 15px;
+    color: darkgreen;
+}
+
