@@ -241,19 +241,52 @@ button#buttonA:hover {
     transition: opacity 0.2s ease-in-out;
 }
 
+#backlink {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 1000;
+    background: linear-gradient(to bottom right, #ffffff, #f0f0f0);
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    transform: rotate(-2deg);
+    transition: transform 0.3s ease;
+}
+
+#backlink a {
+    display: block;
+    padding: 8px 12px;
+    color: darkgreen;
+    text-decoration: none;
+    font-family: "Big Caslon", serif;
+    font-size: 0.9rem;
+}
+
+#backlink:hover {
+    transform: rotate(2deg);
+}
+
 .page-header {
     text-align: center;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
+    padding: 2.5rem 0.5rem 0.5rem;
     font-family: "Big Caslon", serif;
     font-size: 15px;
     color: darkgreen;
 }
 
-#backlink {
-    position: fixed;
-    top: 16px;      /* Abstand nach unten erhöht */
-    left: 8px;
-    z-index: 1000;
+@media screen and (max-width: 600px) {
+    #backlink {
+        top: 8px;
+        left: 8px;
+    }
+    
+    #backlink a {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+    
+    .page-header {
+        padding-top: 3rem;
+    }
 }
 
