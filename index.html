@@ -6,45 +6,46 @@
     <title>Zungenbrecher Alphabet</title>
     <link rel="stylesheet" href="style.css">
 </head>
-	<div id="backlink">
-		<style>
-			#backlink {
-				--color-accent: darkgreen;
-				position: absolute;
-				top: 8px;
-				left: 8px;  /* Changed from right to left */
-				border: 1px solid darkgreen;
-				background-color: white;
-				padding: 8px;
-				cursor: pointer;
-				color: darkgreen;
-				font-size: 0.8rem;
-				font-family: "Big Caslon", serif;  /* Added to match site font */
-				font-weight: bold;
-				transition: all 0.3s ease;
-				transform: rotate(-2deg) scale(0.9);
-				box-shadow: 0 0 10px 0 rgba(0, 100, 0, 0.2);  /* Changed to green tint */
-			}
-			
-			#backlink a {
-				text-decoration: none;
-				color: inherit;
-				padding: 0.5rem;
-				transition: all 0.2s ease-in-out;
-			}
-
-			#backlink:hover {
-				transform: rotate(2deg) scale(1);
-				background-color: darkgreen;
-			}
-
-			#backlink:hover a {
-				color: white;
-			}
-		</style>
-		<a href="https://hbk-bs.github.io/documentation-2025-ylva92/">meine Doku</a>
-	</div>
 <body>
+    <div id="backlink">
+        <style>
+            #backlink {
+                --color-accent: darkgreen;
+                position: fixed;
+                top: 8px;
+                left: 8px;
+                border: 1px solid darkgreen;
+                background-color: white;
+                padding: 8px;
+                cursor: pointer;
+                color: darkgreen;
+                font-size: 0.8rem;
+                font-family: "Big Caslon", serif;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                transform: rotate(-2deg) scale(0.9);
+                box-shadow: 0 0 10px 0 rgba(0, 100, 0, 0.2);
+                z-index: 1000;  /* Added to ensure button stays on top */
+            }
+            
+            #backlink a {
+                text-decoration: none;
+                color: inherit;
+                padding: 0.5rem;
+                transition: all 0.2s ease-in-out;
+            }
+
+            #backlink:hover {
+                transform: rotate(2deg) scale(1);
+                background-color: darkgreen;
+            }
+
+            #backlink:hover a {
+                color: white;
+            }
+        </style>
+        <a href="https://hbk-bs.github.io/documentation-2025-ylva92/">meine Doku</a>
+    </div>
     <main>
         <header class="page-header">
             Hinweis: der Generator stolpert manchmal selbst über seine Zunge!
