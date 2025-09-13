@@ -205,6 +205,12 @@ button#buttonA:hover {
     height: 32px;
     border-width: 3px;
   }
+
+  #backlink {
+        top: 40px;      /* Noch mehr Abstand nach unten */
+        padding: 4px 6px;
+        font-size: 0.7rem;
+    }
 }
 
 @media screen and (max-width: 400px) {
@@ -242,5 +248,12 @@ button#buttonA:hover {
     font-family: "Big Caslon", serif;
     font-size: 15px;
     color: darkgreen;
+}
+
+#backlink {
+    position: fixed;
+    top: 16px;      /* Abstand nach unten erhöht */
+    left: 8px;
+    z-index: 1000;
 }
 
