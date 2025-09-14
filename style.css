@@ -29,7 +29,7 @@ main {
   align-items: center;
   justify-content: flex-start; /* Change from center to flex-start */
   gap: 38px;
-  padding-top: 20px; /* Add specific top padding instead of general padding */
+  padding-top: 60px; /* Fügt Abstand oben hinzu */
   padding-left: 8px;
   padding-right: 8px;
   padding-bottom: 10px;
@@ -210,6 +210,12 @@ button#buttonA:hover {
         top: 40px;      /* Noch mehr Abstand nach unten */
         padding: 4px 6px;
         font-size: 0.7rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    main {
+        padding-top: 80px;
     }
 }
 
