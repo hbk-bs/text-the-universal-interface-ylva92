@@ -251,50 +251,25 @@ button#buttonA:hover {
 
 #backlink {
     position: fixed;
-    bottom: 16px; /* Mehr Abstand vom unteren Rand */
+    bottom: 16px;
     left: 16px;
     background: linear-gradient(to bottom right, #ffffff, #f0f0f0);
-    border-radius: 8px; /* Größerer Radius für bessere Touch-Ziele */
+    border-radius: 8px;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
     transform: rotate(-2deg);
     transition: transform 0.3s ease;
     z-index: 1000;
+    width: auto; /* Verhindert das Strecken */
+    display: inline-block; /* Macht den Button so breit wie sein Inhalt */
 }
 
 #backlink a {
-    display: block;
-    padding: 12px 16px; /* Größeres Padding für bessere Touch-Ziele */
+    display: inline-block; /* Ändert display von block zu inline-block */
+    padding: 12px 16px;
     color: darkgreen;
     text-decoration: none;
     font-family: "Big Caslon", serif;
     font-size: 0.9rem;
-}
-
-#backlink:hover {
-    transform: rotate(2deg);
-}
-
-.page-header {
-    text-align: center;
-    padding: 2.5rem 0.5rem 0.5rem;
-    font-family: "Big Caslon", serif;
-    font-size: 15px;
-    color: darkgreen;
-}
-
-@media screen and (max-width: 600px) {
-    #backlink {
-        top: 8px;
-        left: 8px;
-    }
-    
-    #backlink a {
-        padding: 6px 10px;
-        font-size: 0.8rem;
-    }
-    
-    .page-header {
-        padding-top: 3rem;
-    }
+    white-space: nowrap; /* Verhindert Umbrüche */
 }
 
