@@ -29,7 +29,7 @@ main {
   align-items: center;
   justify-content: flex-start; /* Change from center to flex-start */
   gap: 38px;
-  padding-top: 60px; /* Fügt Abstand oben hinzu */
+  padding-top: 80px; /* Erhöhen Sie diesen Wert */
   padding-left: 8px;
   padding-right: 8px;
   padding-bottom: 10px;
@@ -206,10 +206,12 @@ button#buttonA:hover {
     border-width: 3px;
   }
 
-  #backlink {
-        top: 40px;      /* Noch mehr Abstand nach unten */
-        padding: 4px 6px;
-        font-size: 0.7rem;
+  .navigation {
+        height: 80px;
+    }
+    
+    main {
+        padding-top: 100px; /* Noch mehr Platz auf mobilen Geräten */
     }
 }
 
@@ -247,16 +249,29 @@ button#buttonA:hover {
     transition: opacity 0.2s ease-in-out;
 }
 
-#backlink {
+.navigation {
     position: fixed;
-    top: 8px;
-    left: 8px;
+    top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
+    height: 60px;
+}
+
+.nav-container {
+    padding: 8px;
+}
+
+#backlink {
+    position: relative; /* Ändern von fixed zu relative */
+    top: 0;
+    left: 0;
     background: linear-gradient(to bottom right, #ffffff, #f0f0f0);
     border-radius: 5px;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
     transform: rotate(-2deg);
     transition: transform 0.3s ease;
+    display: inline-block;
 }
 
 #backlink a {
